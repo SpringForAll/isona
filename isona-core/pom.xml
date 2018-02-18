@@ -13,8 +13,7 @@
 
 	<parent>
 		<groupId>com.spring4all</groupId>
-		<artifactId>isona</artifactId>
-		<relativePath>../pom.xml</relativePath>
+		<artifactId>isona-parent</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 

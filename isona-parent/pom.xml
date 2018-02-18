@@ -4,37 +4,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.spring4all</groupId>
-	<artifactId>isona-storage</artifactId>
+	<artifactId>isona-parent</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>pom</packaging>
 
-	<name>isona-storage</name>
+	<name>isona-parent</name>
 	<description>Go ! Go ! Go !</description>
-
-	<parent>
-		<groupId>com.spring4all</groupId>
-		<artifactId>isona-parent</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
-	</parent>
-
-	<dependencies>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-
-	</dependencies>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -42,6 +17,8 @@
 		<java.version>1.8</java.version>
 		<spring-cloud.version>Edgware.SR1</spring-cloud.version>
 		<spring-boot.version>1.5.10.RELEASE</spring-boot.version>
+		<fastjson.version>1.2.44</fastjson.version>
+		<okhttp.version>3.9.1</okhttp.version>
 	</properties>
 
 	<dependencyManagement>
@@ -62,6 +39,19 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
 
 	<build>
 		<plugins>
