@@ -1,0 +1,243 @@
+<html layout:decorator="layout/layout">
+<head>
+    <!-- Datatables CSS -->
+    <link rel="stylesheet" type="text/css" href="vendor/plugins/datatables/media/css/dataTables.bootstrap.css">
+    <!-- Datatables Editor Addon CSS -->
+    <link rel="stylesheet" type="text/css" href="vendor/plugins/datatables/extensions/Editor/css/dataTables.editor.css">
+    <!-- Datatables ColReorder Addon CSS -->
+    <link rel="stylesheet" type="text/css" href="vendor/plugins/datatables/extensions/ColReorder/css/dataTables.colReorder.min.css">
+
+    <style type="text/css">
+        .info-circle {
+            width: 25px;
+            height: 25px;
+        }
+    </style>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="tray tray-center">
+        <!-- dashboard tiles -->
+        <div class="row">
+            <div class="col-sm-3 col-xl-3">
+                <div class="panel panel-tile text-center br-a br-grey">
+                    <div class="panel-body">
+                        <h1 class="fs30 mt5 mbn" th:text="${servicesNum}">1,426</h1>
+                        <h6 class="text-system">Total services</h6>
+                    </div>
+                    <div class="panel-footer br-t p12">
+                      <span class="fs11">
+                        <!--<i class="fa fa-arrow-up pr5"></i> 3% INCREASE <b>1W AGO</b>-->
+                      </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3 col-xl-3">
+                <div class="panel panel-tile text-center br-a br-grey">
+                    <div class="panel-body">
+                        <h1 class="fs30 mt5 mbn" th:text="${instancesNum}">63,262</h1>
+                        <h6 class="text-success">Total Instances</h6>
+                    </div>
+                    <div class="panel-footer br-t p12">
+                      <span class="fs11">
+                        <!--<i class="fa fa-arrow-up pr5"></i> 2.7% INCREASE <b>1W AGO </b>-->
+                      </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3 col-xl-3">
+                <div class="panel panel-tile text-center br-a br-grey">
+                    <div class="panel-body">
+                        <h1 class="fs30 mt5 mbn" th:text="${notUpInstancesNum}">24</h1>
+                        <h6 class="text-warning">Not Up Instances</h6>
+                    </div>
+                    <div class="panel-footer br-t p12">
+                      <span class="fs11">
+                        <!--<i class="fa fa-arrow-up pr5 text-success"></i> 1% INCREASE <b>1W AGO</b>-->
+                      </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3 col-xl-3 visible-xl">
+                <div class="panel panel-tile text-center br-a br-grey">
+                    <div class="panel-body">
+                        <h1 class="fs30 mt5 mbn" th:text="${memDangerInstancesNum}">6,718</h1>
+                        <h6 class="text-danger">Memory Danger Instances</h6>
+                    </div>
+                    <div class="panel-footer br-t p12">
+                        <span class="fs11">
+                        <!--<i class="fa fa-arrow-down pr5 text-danger"></i> 6% DECREASE <b>1W AGO</b>-->
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- dashboard tiles -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-visible" id="spy6">
+                    <div class="panel-heading">
+                        <div class="panel-title hidden-xs">
+                            <span class="glyphicon glyphicon-tasks"></span>微服务总览</div>
+                    </div>
+                    <div class="panel-body pn">
+                        <table class="table display" id="datatable" cellspacing="0" width="100%">
+                            <thead>
+                            <tr>
+                                <th>ServiceName</th>
+                                <th>ServiceAddress</th>
+                                <th>ServicePort</th>
+                                <th>Status</th>
+                                <th>Mem</th>
+                                <!--<th>Thread</th>-->
+                                <th>Metadata</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="service, iterStat : ${serviceList}">
+                                <td th:text="${service.serviceName}"></td>
+                                <td th:text="${service.serviceAddress}"></td>
+                                <td th:text="${service.servicePort}"></td>
+                                <td th:switch="${service.status.toString()}">
+                                    <span th:case="UP" class="label label-rounded label-success">UP</span>
+                                    <span th:case="'DOWN'" class="label label-rounded label-danger">DOWN</span>
+                                    <span th:case="'WARNING'" class="label label-rounded label-warning">WARNING</span>
+                                    <span th:case="'UNKNOWN'" class="label label-rounded label-default">UNKNOWN</span>
+                                    <span th:case="*" class="label label-rounded label-default">UNKNOWN</span>
+                                </td>
+                                <td style="text-align: center;">
+                                    <div th:if="${service.memPercent} ge 90"
+                                         th:id="${service.serviceName} + ${service.serviceAddress} + ${service.servicePort}" th:text="${service.memPercent}" th:value="${service.memPercent}"
+                                         class="info-circle" data-circle-color="danger"></div>
+                                    <div th:if="${service.memPercent} ge 70 and ${service.memPercent} lt 90"
+                                         th:id="${service.serviceName} + ${service.serviceAddress} + ${service.servicePort}" th:text="${service.memPercent}" th:value="${service.memPercent}"
+                                         class="info-circle" data-circle-color="warning"></div>
+                                    <div th:if="${service.memPercent} lt 70"
+                                         th:id="${service.serviceName} + ${service.serviceAddress} + ${service.servicePort}" th:text="${service.memPercent}" th:value="${service.memPercent}"
+                                         class="info-circle" data-circle-color="success"></div>
+                                </td>
+                                <!--<td th:text="${service.threads}"></td>-->
+                                <td th:text="${service.metadata}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Datatables -->
+    <script src="vendor/plugins/datatables/media/js/jquery.dataTables.js"></script>
+    <!-- Datatables Tabletools addon -->
+    <script src="vendor/plugins/datatables/extensions/TableTools/js/dataTables.tableTools.min.js"></script>
+    <!-- Datatables ColReorder addon -->
+    <script src="vendor/plugins/datatables/extensions/ColReorder/js/dataTables.colReorder.min.js"></script>
+    <!-- Datatables Bootstrap Modifications  -->
+    <script src="vendor/plugins/datatables/media/js/dataTables.bootstrap.js"></script>
+    <!-- Simple Circles Plugin -->
+    <script src="vendor/plugins/circles/circles.js"></script>
+
+    <!-- Theme Javascript -->
+    <script src="assets/js/utility/utility.js"></script>
+    <script src="assets/js/demo/demo.js"></script>
+    <script src="assets/js/main.js"></script>
+
+    <!-- Demo Widget Javascript -->
+    <script src="assets/js/demo/widgets.js"></script>
+
+    <!-- START: PAGE SCRIPTS -->
+    <script type="text/javascript">
+        jQuery(document).ready(function() {
+            // ROW GROUPING
+            var table = $('#datatable').DataTable({
+                "columnDefs": [{
+                    "visible": false,
+                    "targets": 0
+                }],
+                "order": [
+                    [0, 'asc']
+                ],
+                "sDom": 't<"dt-panelfooter clearfix"ip>',
+//                "displayLength": 25,
+                "paging": false,
+                "drawCallback": function(settings) {
+                    var api = this.api();
+                    var rows = api.rows({
+                        page: 'current'
+                    }).nodes();
+                    var last = null;
+
+                    api.column(0, {
+                        page: 'current'
+                    }).data().each(function(group, i) {
+                        if (last !== group) {
+                            $(rows).eq(i).before(
+                                '<tr class="row-label ' + group.replace(/ /g, '').toLowerCase() + '"><td colspan="6">' + group + '</td></tr>'
+                            );
+                            last = group;
+                        }
+                    });
+                }
+            });
+
+            // Order by the grouping
+            $('#datatable tbody').on('click', 'tr.row-label', function() {
+                var currentOrder = table.order()[0];
+                if (currentOrder[0] === 0 && currentOrder[1] === 'asc') {
+                    table.order([0, 'desc']).draw();
+                } else {
+                    table.order([0, 'asc']).draw();
+                }
+            });
+
+            var highColors = [bgInfo, bgPrimary, bgSuccess, bgWarning, bgDanger, bgSuccess, bgSystem, bgDark];
+            var demoCircleGraphs = function() {
+                var infoCircle = $('.info-circle');
+                if (infoCircle.length) {
+                    var colors = {
+                        "primary": [bgPrimary, bgPrimaryLr, bgPrimaryDr],
+                        "info": [bgInfo, bgInfoLr, bgInfoDr],
+                        "warning": [bgWarning, bgWarningLr, bgWarningDr],
+                        "danger": [bgDanger, bgDangerLr, bgDangerDr],
+                        "success": [bgSuccess, bgSuccessLr, bgSuccessDr],
+                        "alert": [bgAlert, bgAlertLr, bgAlertDr]
+                    };
+                    var circles = [];
+                    infoCircle.each(function(i, e) {
+                        var color = ['#DDD', bgPrimary];
+                        var targetColor = $(e).data('circle-color');
+                        if (targetColor) {
+                            var color = ['#DDD', colors[targetColor][0]];
+                        }
+                        var circle = Circles.create({
+                            id: $(e).attr('id'),
+                            value: $(e).attr('value'),
+                            radius: $(e).width() / 2,
+                            width: 14,
+                            colors: color
+                        });
+                        circles.push(circle);
+                    });
+                    var rescale = function() {
+                        infoCircle.each(function(i, e) {
+                            var getWidth = $(e).width() / 2;
+                            circles[i].updateRadius(getWidth);
+                        });
+                        setTimeout(function() {
+                                $('.info-circle').find('.circle-text-value').fitText(0.4);
+                            },
+                            50);
+                    }
+                    var lazyLayout = _.debounce(rescale, 300);
+                    $(window).resize(lazyLayout);
+                }
+            };
+
+            demoCircleGraphs();
+        });
+    </script>
+    <!-- END: PAGE SCRIPTS -->
+</div>
+</body>
+</html>

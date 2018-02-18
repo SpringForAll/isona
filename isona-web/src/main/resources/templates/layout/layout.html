@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Isona - www.spring4all.com</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="assets/skin/default_skin/css/theme.css">
+    <link rel="stylesheet" type="text/css" href="assets/admin-tools/admin-forms/css/admin-forms.min.css">
+    <link rel="shortcut icon" href="assets/img/favicon.ico">
+    <!-- jQuery -->
+    <script src="vendor/jquery/jquery-1.11.1.min.js"></script>
+    <script src="vendor/jquery/jquery_ui/jquery-ui.min.js"></script>
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body class="dashboard-page">
+<!-- Start: Main -->
+<div id="main">
+    <!-- Start: Header -->
+    <header class="navbar navbar-fixed-top navbar-shadow" th:include="layout/header :: header"></header>
+    <!-- End: Header -->
+
+    <!-- Start: Sidebar -->
+    <aside id="sidebar_left" class="nano nano-light affix">
+        <!-- Start: Sidebar Left Content -->
+        <div class="sidebar-left-content nano-content">
+            <!-- Start: Sidebar Menu -->
+            <ul class="nav sidebar-menu" th:include="layout/menu :: menu"></ul>
+            <!-- End: Sidebar Menu -->
+        </div>
+        <!-- End: Sidebar Left Content -->
+    </aside>
+    <!-- End: Sidebar Left -->
+
+    <!-- Start: Content-Wrapper -->
+    <section id="content_wrapper">
+
+        <!-- Start: Topbar -->
+        <header id="topbar" th:include="layout/topbar :: topbar" class="alt"></header>
+        <!-- End: Topbar -->
+
+        <!-- Begin: Content -->
+        <section id="content" layout:fragment="content" class="table-layout animated fadeIn"></section>
+        <!-- End: Content -->
+
+        <!-- Begin: Page Footer -->
+        <footer id="content-footer" th:include="layout/footer :: footer" class="affix"></footer>
+        <!-- End: Page Footer -->
+
+    </section>
+    <!-- End: Content-Wrapper -->
+
+</div>
+<!-- End: Main -->
+</body>
+</html>

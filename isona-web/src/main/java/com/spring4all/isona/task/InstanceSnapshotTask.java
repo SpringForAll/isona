@@ -1,0 +1,12 @@
+package com.spring4all.isona.task;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+public class InstanceSnapshotTask {
+
+
+
+
+
+}
